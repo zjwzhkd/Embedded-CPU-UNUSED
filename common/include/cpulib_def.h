@@ -29,17 +29,13 @@
 
 /* 调试宏 --------------------------------------------------------------------*/
 #ifndef NDEBUG
-
     #define debug_assert(expr)      CPU_Assert(expr)
     #define debug_coverage()        CPU_Coverage()
     #define debug_printf(...)       CPU_Printf(__VA_ARGS__)
-
 #else   /* NDEBUG */
-
     #define debug_assert(expr)      ((void)0)
     #define debug_coverage()        ((void)0)
     #define debug_printf(...)       ((void)0)
-
 #endif  /* NDEBUG */
 
 #endif  /* __CPULIB_DEF_H */
