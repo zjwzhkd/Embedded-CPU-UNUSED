@@ -12,7 +12,7 @@
 
 /* CPU参数配置 ---------------------------------------------------------------*/
 #define CPU_FREQ_HZ         ( (uint32_t) 72000000 ) /* CPU运行频率(Hz)        */
-#define CPU_TIMER_HZ        ( (uint32_t) 72000000 ) /* CPU节拍定时器频率(Hz)  */
+#define CPU_TIMER_HZ        ( CPU_FREQ_HZ )         /* CPU节拍定时器频率(Hz)  */
 #define CPU_TICK_HZ         ( (uint32_t) 1000 )     /* CPU节拍频率(Hz)        */
 #define CPU_BYTE_ALIGNMENT  ( 8 )                   /* CPU内存字节对齐        */
 

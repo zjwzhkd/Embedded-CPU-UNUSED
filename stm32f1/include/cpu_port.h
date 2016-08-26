@@ -40,26 +40,6 @@ typedef base_t          cpu_t;
     #define STATIC_INLINE static inline
 #endif
 
-/* CPU中断管理 ---------------------------------------------------------------*/
-/*判断CPU是否处于处理模式*/
-#define cpu_InHandlerMode()     ( 0 != __get_IPSR() )
-
-#define cpu_irq_enable()        __enable_irq()
-#define cpu_irq_disable()       __disable_irq()
-
-STATIC_INLINE cpu_t cpu_irq_save(void)
-{
-cpu_t cpu_sr;
-
-    cpu_sr = __get_PRIMASK();
-    cpu_irq_disable();
-    return (cpu_sr);
-}
-STATIC_INLINE void cpu_irq_restore(cpu_t cpu_sr)
-{
-    __set_PRIMASK(cpu_sr);
-}
-
 /* 中断/临界区宏 -------------------------------------------------------------*/
 /* 全局中断使能/禁止 */
 #define CPU_EnableInterrupts()              cpu_irq_enable()
@@ -86,14 +66,6 @@ STATIC_INLINE void cpu_irq_restore(cpu_t cpu_sr)
     #define CPU_ExitCriticalFromISR(x)      cpu_irq_restore(x)
 #endif
 
-/* Cortex-M位带操作 ----------------------------------------------------------*/
-#define BITBAND(addr, bitnum)   (((addr)&0xF0000000)+0x2000000+(((addr)&0xFFFFF)<<5)+((bitnum)<<2))
-#define MEM_ADDR(addr)          *((volatile unsigned long *)(addr))
-#define BIT_ADDR(addr, bitnum)  MEM_ADDR(BITBAND(addr, bitnum))
-
-/* 底层操作宏 ----------------------------------------------------------------*/
-#define CPU_NOP()               __NOP()
-
 /* 调试相关宏 ----------------------------------------------------------------*/
 /*调试断言*/
 #if CPU_ASSERT_EN
@@ -116,6 +88,40 @@ STATIC_INLINE void cpu_irq_restore(cpu_t cpu_sr)
 #else
     #define CPU_Printf(...)     ((void)0)
 #endif
+
+/* Cortex-M位带操作 ----------------------------------------------------------*/
+#define BITBAND(addr, bitnum)   (((addr)&0xF0000000)+0x2000000+(((addr)&0xFFFFF)<<5)+((bitnum)<<2))
+#define MEM_ADDR(addr)          *((volatile unsigned long *)(addr))
+#define BIT_ADDR(addr, bitnum)  MEM_ADDR(BITBAND(addr, bitnum))
+
+/* 底层操作宏 ----------------------------------------------------------------*/
+#define CPU_NOP()               __NOP()
+#define CPU_RESET()             NVIC_SystemReset()
+
+/* CPU中断管理 ---------------------------------------------------------------*/
+/*判断CPU是否处于处理模式*/
+#define cpu_InHandlerMode()     ( 0 != __get_IPSR() )
+
+#define cpu_irq_enable()        __enable_irq()
+#define cpu_irq_disable()       __disable_irq()
+
+STATIC_INLINE cpu_t cpu_irq_save(void)
+{
+cpu_t cpu_sr;
+
+    cpu_sr = __get_PRIMASK();
+    cpu_irq_disable();
+    return (cpu_sr);
+}
+STATIC_INLINE void cpu_irq_restore(cpu_t cpu_sr)
+{
+    __set_PRIMASK(cpu_sr);
+}
+
+void cpu_NVIC_SetPriorityGrouping(uint32_t PriorityGroup);
+void cpu_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority);
+void cpu_NVIC_EnableIRQ(IRQn_Type IRQn);
+void cpu_NVIC_DisableIRQ(IRQn_Type IRQn);
 
 /* 接口函数 ------------------------------------------------------------------*/
 void cpu_PortInit(void);
