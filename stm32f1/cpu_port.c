@@ -8,8 +8,6 @@
 *******************************************************************************/
 
 #include "cpu_port.h"
-
-static void prvSystemClockConfig(void);
 /*******************************************************************************
 
                                     中断管理
@@ -79,40 +77,4 @@ void cpu_NVIC_EnableIRQ(IRQn_Type IRQn)
 void cpu_NVIC_DisableIRQ(IRQn_Type IRQn)
 {
     NVIC_DisableIRQ(IRQn);
-}
-
-/*******************************************************************************
-
-                                    接口管理
-
-*******************************************************************************/
-/*CPU接口初始化函数*/
-void cpu_PortInit(void)
-{
-    /*系统时钟配置*/
-    prvSystemClockConfig();
-    /*使能堆栈8字节对齐*/
-    SCB->CCR |= SCB_CCR_STKALIGN_Msk;
-    /*配置优先级分组, 4位抢占优先级*/
-    cpu_NVIC_SetPriorityGrouping(3);
-}
-
-/*******************************************************************************
-
-                                    私有函数
-
-*******************************************************************************/
-/*系统时钟配置*/
-static void prvSystemClockConfig(void)
-{
-    /*
-        在SystemInit()函数中, 实现了:
-        1.复位时钟配置
-        2.可选的外部SRAM初始化
-        3.内部Flash预取缓存和等待状态设置
-        4.CPU系统的时钟初始化
-        5.中断向量表偏移设置
-    */
-    SystemCoreClockUpdate();
-    CPU_Assert(CPU_FREQ_HZ == SystemCoreClock);
 }

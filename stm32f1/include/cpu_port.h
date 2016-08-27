@@ -123,7 +123,4 @@ void cpu_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t Sub
 void cpu_NVIC_EnableIRQ(IRQn_Type IRQn);
 void cpu_NVIC_DisableIRQ(IRQn_Type IRQn);
 
-/* 接口函数 ------------------------------------------------------------------*/
-void cpu_PortInit(void);
-
 #endif  /* __CPU_PORT_H */
