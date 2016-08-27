@@ -24,6 +24,8 @@ void cpu_Init(void)
     cpu_NVIC_SetPriorityGrouping(3);
     /*系统时钟配置*/
     prvSystemClockConfig();
+    /*初始化CPU节拍*/
+    cpu_TickInit();
 }
 
 /*******************************************************************************

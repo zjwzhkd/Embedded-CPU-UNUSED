@@ -23,7 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
-
+#include "cpu.h"
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
   */
@@ -127,6 +127,9 @@ void PendSV_Handler(void)
 {
 }
 
+#ifdef CPU_USE_OS_SCHEDULER
+void sched_CoreTickHandler(void);
+#endif
 /**
   * @brief  This function handles SysTick Handler.
   * @param  None
@@ -134,6 +137,10 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+    cpu_TickHandler();
+#ifdef CPU_USE_OS_SCHEDULER
+    sched_CoreTickHandler();
+#endif
 }
 
 /******************************************************************************/

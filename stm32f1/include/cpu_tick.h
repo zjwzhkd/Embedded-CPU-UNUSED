@@ -17,6 +17,7 @@
 /* 数据结构 ------------------------------------------------------------------*/
 /*节拍处理函数类型*/
 typedef void (*TickIRQHandler_t) (void);
+/*节拍中断请求结构体类型*/
 typedef struct tick_irq TickIRQ_t;
 struct tick_irq
 {
