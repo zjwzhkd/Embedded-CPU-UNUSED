@@ -436,7 +436,7 @@ uint8_t *puc;
     {
     }
 
-    /*合并pSearch .. pBlockToInsert*/
+    /*尝试合并pSearch .. pBlockToInsert*/
     puc = (uint8_t *)pSearch;
     if ( puc + pSearch->blockSize == (uint8_t *)pBlockToInsert )
     {
@@ -444,7 +444,7 @@ uint8_t *puc;
         pBlockToInsert = pSearch;
     }
 
-    /*合并pBlockToInsert .. pSearch->pNextFreeBlock*/
+    /*尝试合并pBlockToInsert .. pSearch->pNextFreeBlock*/
     puc = (uint8_t *)pBlockToInsert;
     if ( puc + pBlockToInsert->blockSize == (uint8_t *)pSearch->pNextFreeBlock )
     {

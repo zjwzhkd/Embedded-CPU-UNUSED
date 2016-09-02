@@ -33,12 +33,21 @@ typedef struct list_head ListNode_t;  /*链表结点结构类型*/
     container_of(ptr, type, member)
 
 /*
- * 链表遍历
+ * 链表遍历, 不允许删除链表结点
  * pos:  链表结点遍历指针
  * head: 链表头指针
  */
 #define list_for_each(pos, head) \
-    for (pos = (head)->next;pos != (head) ;pos = pos->next)
+    for (pos = (head)->next; pos != (head); pos = pos->next)
+
+/*
+ * 链表遍历, 允许删除遍历链表结点
+ * pos:  链表结点遍历指针
+ * tmp:  链表结点临时指针
+ * head: 链表头指针
+ */
+#define list_for_each_safe(pos, tmp, head) \
+    for (pos = (head)->next, tmp = pos->next; pos != (head); pos = tmp, tmp = pos->next)
 
 /* 链表操作函数 --------------------------------------------------------------*/
 /*初始化链表头或者链表结点*/
