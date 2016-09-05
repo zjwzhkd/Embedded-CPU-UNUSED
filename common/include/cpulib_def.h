@@ -16,6 +16,9 @@
 #include <stdint.h>
 
 /* 结构体宏 ------------------------------------------------------------------*/
+/*获取数组大小*/
+#define ARRAY_SIZE(arr)             ( sizeof(arr)/sizeof(*(arr)) )
+
 /*获取结构体成员变量的偏移量*/
 #ifndef offsetof
     #define offsetof(type,member)   ( (size_t)(&((type *)0)->member) )

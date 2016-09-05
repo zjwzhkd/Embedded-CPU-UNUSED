@@ -7,6 +7,7 @@
 *******************************************************************************/
 
 #include "cpulib_heap.h"
+#include <string.h>
 /*******************************************************************************
 
                                     数据结构
@@ -269,7 +270,7 @@ size_t totalSize = nmemb*size;
     pRet = heap_Malloc(heap, totalSize);
     if ( NULL != pRet )
     {
-        heap_Memset(pRet, 0, size);
+        memset(pRet, 0, size);
     }
     return (pRet);
 }
@@ -333,7 +334,7 @@ size_t allocSize;
             pRet = heap_Malloc(heap, size);
             if (pRet != NULL)
             {
-                heap_Memcpy(pRet,ptr,allocSize-HeapBlockStructSize);
+                memcpy(pRet,ptr,allocSize-HeapBlockStructSize);
                 heap_Free(heap, ptr);
             }
         }
@@ -388,33 +389,6 @@ HeapBlock_t *pBlock;
             }
         }
     }
-}
-
-/*******************************************************************************
-
-                                  内存复制函数
-
-*******************************************************************************/
-/*内存复制函数*/
-void *heap_Memcpy( void *dest, const void *src, size_t n )
-{
-uint8_t *d = (uint8_t *)dest;
-const uint8_t *s = (const uint8_t *)src;
-
-    for (; 0 < n; ++d, ++s, --n)
-        *d = *s;
-    return (dest);
-}
-
-/*内存置位函数*/
-void *heap_Memset( void *dest, int c, size_t n )
-{
-uint8_t *d = (uint8_t *)dest;
-const uint8_t uc = (uint8_t)c;
-
-    for (; 0 < n; ++d, --n)
-        *d = uc;
-    return (dest);
 }
 
 /*******************************************************************************

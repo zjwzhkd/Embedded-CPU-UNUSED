@@ -38,8 +38,5 @@ void *heap_Malloc( HeapDev_t *heap, size_t size );
 void *heap_Calloc( HeapDev_t *heap, size_t nmemb, size_t size );
 void *heap_Realloc( HeapDev_t *heap, void *ptr, size_t size );
 void heap_Free( HeapDev_t *heap, void *ptr );
-/*内存复制函数*/
-void *heap_Memcpy( void *dest, const void *src, size_t n );
-void *heap_Memset( void *dest, int c, size_t n );
 
 #endif  /* __CPULIB_HEAP_H */
